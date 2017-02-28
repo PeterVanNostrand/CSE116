@@ -1,6 +1,7 @@
 package edu.buffalo.cse116;
 
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -76,6 +77,7 @@ public class ArrayMultiSet<E> implements Collection<E> {
     // Finally, we can increase _size, since this change will no longer violate
     // any class invariants.
     _size += 1;
+    _modCount++;
     return true;
   }
 
@@ -134,6 +136,7 @@ public class ArrayMultiSet<E> implements Collection<E> {
 
     // Finally set the newly unused index to null thus avoiding a space leak
     _store[_size] = null;
+    _modCount++;
 
   }
 
@@ -213,7 +216,10 @@ public class ArrayMultiSet<E> implements Collection<E> {
     }
 
     public E next() {
-    	if(hasNext()){
+    	if(_modCount!=_collectionVersion){
+    		throw new ConcurrentModificationException();
+    	}
+    	else if(hasNext()){
     		_cursor++;
     		return _store[_cursor-1];
     	}
