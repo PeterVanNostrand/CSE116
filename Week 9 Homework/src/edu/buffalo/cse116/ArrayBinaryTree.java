@@ -39,7 +39,7 @@ public class ArrayBinaryTree<E extends Comparable<E>> extends AbstractSet<E> {
    * @return True if there is an element at the given index; false otherwise.
    */
   private boolean nodeExists(int idx) {
-
+	  return idx<size && store[idx]!=null;
   }
 
   /**
@@ -50,7 +50,13 @@ public class ArrayBinaryTree<E extends Comparable<E>> extends AbstractSet<E> {
    * @return Value of the node's left child or null if no left child exists.
    */
   private E leftChild(int idx) {
-
+	  int childIdx = 2*idx +1;
+	  if(nodeExists(childIdx)){
+		  return store[childIdx];
+	  }
+	  else{
+		  throw new IndexOutOfBoundsException();
+	  }
   }
 
   /**
@@ -61,6 +67,13 @@ public class ArrayBinaryTree<E extends Comparable<E>> extends AbstractSet<E> {
    * @return Value of the node's parent or null if no parent exists.
    */
   private E parent(int idx) {
+	  int parentIdx = (idx-1)/2;
+	  if(nodeExists(parentIdx)){
+		  return store[parentIdx];
+	  }
+	  else{
+		  throw new IndexOutOfBoundsException();
+	  }
   }
 
   /**
