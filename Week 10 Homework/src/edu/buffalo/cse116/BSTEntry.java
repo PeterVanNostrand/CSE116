@@ -61,15 +61,25 @@ public class BSTEntry<E extends Comparable<E>> {
 	 *         the current node's.
 	 */
 	public int numberLargerNodesInSubtree() {
-		return numberLargerNodesInSubtree(this, 0);
+		if(this.right!=null){
+			return this.right.countElements();
+		}
+		else{
+			return 0;
+		}
 	}
 
-	private int numberLargerNodesInSubtree(BSTEntry ent, int numLarger) {
-		if (this.parent == null) {
-			return 0;
-		} else {
-			return numberLargerNodesInSubtree(ent.parent, numLarger += 1);
+	private int countElements(){
+		BSTEntry<E> right = this.right;
+		BSTEntry<E> left = this.left;
+		int count = 1;
+		if(right!=null){
+			count += right.countElements();
 		}
+		if(left!=null){
+			count+= left.countElements();
+		}
+		return count;
 	}
 
 	/**
@@ -81,23 +91,11 @@ public class BSTEntry<E extends Comparable<E>> {
 	 *         the current node's.
 	 */
 	public int numberSmallerNodesInSubtree() {
-		return numberSmallerNodesInSubtree(this, 0);
-	}
-
-	private int numberSmallerNodesInSubtree(BSTEntry ent, int numSmaller) {
-		if (ent.left == null && ent.right == null) {
-			return 0;
-		} else if(ent.left!=null && ent.right!=null){
-			numSmaller++;
-			return numberSmallerNodesInSubtree(ent.left,numSmaller+=1) + numberSmallerNodesInSubtree(ent.right, numSmaller+=1);
-		}
-		else if(ent.left!=null){
-			numSmaller++;
-			return numberSmallerNodesInSubtree(ent.left, numSmaller+=1);
+		if(this.left!=null){
+			return this.left.countElements();
 		}
 		else{
-			numSmaller++;
-			return numberSmallerNodesInSubtree(ent.right, numSmaller+=1);
+			return 0;
 		}
 	}
 }
