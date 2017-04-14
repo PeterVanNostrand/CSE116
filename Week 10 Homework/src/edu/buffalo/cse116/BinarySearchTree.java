@@ -226,7 +226,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends AbstractSet<E> {
 	 */
 	private void removeLeaf(Entry<E> leaf) {
 		// You should assume that leaf a leaf node
-		if (leaf.parent.right !=null && leaf.parent.right.equals(leaf)) {
+		if (leaf.parent.right != null && leaf.parent.right.equals(leaf)) {
 			leaf.parent.right = null;
 		} else {
 			leaf.parent.left = null;
@@ -245,23 +245,33 @@ public class BinarySearchTree<E extends Comparable<E>> extends AbstractSet<E> {
 	private void promoteChild(Entry<E> replacement) {
 		// You should assume replacement is not root
 		Entry<E> parentEntry = replacement.parent;
-		if(parentEntry.parent!=null){
-			if(isRightChild(replacement, parentEntry)){
-				parentEntry.right = replacement;
+		Entry<E> grandDaddyEntry = parentEntry.parent;
+		migrateChildren(parentEntry, replacement);
+		if (grandDaddyEntry != null) {
+			if (isRightChild(parentEntry, grandDaddyEntry)) {
+				grandDaddyEntry.right = replacement;
+			} else {
+				grandDaddyEntry.left = replacement;
 			}
-			else{
-				parentEntry.left = replacement;
-			}
+		} else {
+			root = replacement;
 		}
-		else{
-			//promote replacement to root
+		replacement.parent = grandDaddyEntry;
+	}
+
+	private void migrateChildren(Entry<E> parent, Entry<E> child) {
+		if (parent.left != null && !parent.left.equals(child)) {
+			child.left = parent.left;
+		}
+		if (parent.right != null && !parent.right.equals(child)) {
+			child.right = parent.right;
 		}
 	}
 
-	private boolean isRightChild(Entry<E> child ,Entry<E> parent){
+	private boolean isRightChild(Entry<E> child, Entry<E> parent) {
 		return parent.right.equals(child);
 	}
-	
+
 	/**
 	 * Once we know a node has either 0 or 1 children, we need to find the
 	 * replacement node. If the node to be removed is a leaf, null should be
@@ -274,6 +284,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends AbstractSet<E> {
 	 *         child otherwise.
 	 */
 	private Entry<E> selectReplacementChild(Entry<E> removeMe) {
+		if (removeMe.left != null) {
+			return removeMe.left;
+		} else if (removeMe.right != null) {
+			return removeMe.right;
+		} else {
+			return null;
+		}
 	}
 
 	/**
