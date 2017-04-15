@@ -28,6 +28,7 @@ public class BinaryTree<E> extends AbstractCollection<E> {
   }
 
   public String visit(TreeVisitor<E> visitor) {
+	  return root.apply(visitor, "");
   }
 
   /**

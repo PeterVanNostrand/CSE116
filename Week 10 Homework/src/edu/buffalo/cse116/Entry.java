@@ -1,79 +1,90 @@
 package edu.buffalo.cse116;
 
 public class Entry<E> {
-  /** Tree's element which is stored within this Node. */
-  private E element;
+	/** Tree's element which is stored within this Node. */
+	private E element;
 
-  /** Left child of the current Node. */
-  private Entry<E> left;
-  /** Right child of the current Node. */
-  private Entry<E> right;
-  /** Parent in the binary tree for the current Node. */
-  private Entry<E> parent;
+	/** Left child of the current Node. */
+	private Entry<E> left;
+	/** Right child of the current Node. */
+	private Entry<E> right;
+	/** Parent in the binary tree for the current Node. */
+	private Entry<E> parent;
 
-  /**
-   * Initializes this Entry object. This default constructor is defined for future expansion purposes.
-   */
-  public Entry() {}
+	/**
+	 * Initializes this Entry object. This default constructor is defined for
+	 * future expansion purposes.
+	 */
+	public Entry() {
+	}
 
-  /**
-   * Initializes this Entry object from element and parent.
-   */
-  public Entry(E element, Entry<E> parent) {
-    this.element = element;
-    this.parent = parent;
-  }
+	/**
+	 * Initializes this Entry object from element and parent.
+	 */
+	public Entry(E element, Entry<E> parent) {
+		this.element = element;
+		this.parent = parent;
+	}
 
-  /** Return the element stored in this node. */
-  public E getElement() {
-    return element;
-  }
+	/** Return the element stored in this node. */
+	public E getElement() {
+		return element;
+	}
 
-  /** Specify a new element to be stored at this node. */
-  public void setElement(E element) {
-    this.element = element;
-  }
+	/** Specify a new element to be stored at this node. */
+	public void setElement(E element) {
+		this.element = element;
+	}
 
-  /** Get the node's left child. */
-  public Entry<E> getLeft() {
-    return left;
-  }
+	/** Get the node's left child. */
+	public Entry<E> getLeft() {
+		return left;
+	}
 
-  /** Specify a node to be the left child of the current node. */
-  public void setLeft(Entry<E> left) {
-    this.left = left;
-  }
+	/** Specify a node to be the left child of the current node. */
+	public void setLeft(Entry<E> left) {
+		this.left = left;
+	}
 
-  /** Get the node's right child. */
-  public Entry<E> getRight() {
-    return right;
-  }
+	/** Get the node's right child. */
+	public Entry<E> getRight() {
+		return right;
+	}
 
-  /** Specify a node to be the right child of the current node. */
-  public void setRight(Entry<E> right) {
-    this.right = right;
-  }
+	/** Specify a node to be the right child of the current node. */
+	public void setRight(Entry<E> right) {
+		this.right = right;
+	}
 
-  /** Get the node's parent in the tree. This is null if the node is a root. */
-  public Entry<E> getParent() {
-    return parent;
-  }
+	/**
+	 * Get the node's parent in the tree. This is null if the node is a root.
+	 */
+	public Entry<E> getParent() {
+		return parent;
+	}
 
-  /** Specify a node to be the parent of the current node. */
+	/** Specify a node to be the parent of the current node. */
 
-  public void setParent(Entry<E> parent) {
-    this.parent = parent;
-  }
+	public void setParent(Entry<E> parent) {
+		this.parent = parent;
+	}
 
-  /**
-   * Implement the node's portion of the Visitor pattern. This allows the TreeVisitor to work and return the result of
-   * the traversal.
-   *
-   * @param visitor TreeVisitor instance doing the work.
-   * @param data Data being passed along as part of this visiting traveral.
-   * @return The result returned by the TreeVisitor.
-   */
-  public String apply(TreeVisitor<E> visitor, String data) {
-  }
+	/**
+	 * Implement the node's portion of the Visitor pattern. This allows the
+	 * TreeVisitor to work and return the result of the traversal.
+	 *
+	 * @param visitor
+	 *            TreeVisitor instance doing the work.
+	 * @param data
+	 *            Data being passed along as part of this visiting traveral.
+	 * @return The result returned by the TreeVisitor.
+	 */
+	public String apply(TreeVisitor<E> visitor, String data) {
+		if (left == null && right == null) {
+			return visitor.visitLeaf(this, data);
+		} else {
+			return visitor.visitInterior(this, data);
+		}
+	}
 
 }
