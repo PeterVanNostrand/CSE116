@@ -218,7 +218,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends AbstractSet<E> {
 	 * BinarySearchTree.
 	 *
 	 * @param p
-	 *            – the Entry object whose element is to be deleted from this
+	 *            the Entry object whose element is to be deleted from this
 	 *            BinarySearchTree object.
 	 * @return the Entry object that was actually deleted from this
 	 *         BinarySearchTree object.
